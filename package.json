@@ -6,7 +6,7 @@
   "scripts": {
     "compile-ts": "tsc -p ./config/tsconfig.build.json",
     "clean-dist": "rimraf dist/",
-    "copy-html": "copyfiles -u 2 src/App/homepage/** dist/App/",
+    "copy-html": "copyfiles -u 2 src/App/views/** dist/App/",
     "build": "npm run clean-dist && npm run compile-ts && npm run copy-html",
     "start": "npm run build && node dist/App/app.js",
     "start-dev": "nodemon src/App/app.ts",
