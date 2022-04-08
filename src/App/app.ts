@@ -1,43 +1,66 @@
 import express, {Application, NextFunction, Request, Response} from 'express';
 import path from 'path';
-import mongoose from 'mongoose';
-import { mongoURI } from '../../config/private-config';
+import mongoose, { Connection } from 'mongoose';
+import { connectDB } from '../DB-Engine/mongo_setup';
+
 
 /*Routers*/
 import { specsRouter } from './routes/specs';
-
-/* Mongoose setup */
-mongoose.connect(mongoURI);
-
-const DB = mongoose.connection
-
-DB.once('open', _ => {
-  console.log('get-gas-api-cluster is connected !')
-});
-
-DB.on('error', err => {
-  console.error('get-gest-api-cluster cannot connect !(connection error):', err)
-});
+/*==================================================*/
 
 /* App setup */
 const app: Application = express();
 const PORT = process.env.PORT || 5555;
+/*==================================================*/
 
+
+/* Mongoose setup */
+app.locals.DBisConnected = false;
+
+connectDB(app.locals.DBisConnected)
+  .then((res) => {
+    app.locals.DBisConnected = res;
+  })
+
+const DB: Connection = mongoose.connection;
+
+DB.on('error', (err: Error) => {
+  console.error('get-gas-api-cluster Database (Error Connecting) - ', err.message)
+  app.locals.DBisConnected = false;
+});
+
+DB.on('connected', () => {
+  console.log('get-gas-api-cluster Database (Connected)')
+  app.locals.DBisConnected = true;
+});
+
+DB.on('reconnectFailed', (err: Error) => {
+  console.error('get-gas-api-cluster database (Cannot Reconnect) - ', err)
+  app.locals.DBisConnected = false;
+});
+
+DB.on('disconnected', (err: Error) => {
+  console.error('get-gas-api-cluster Database (Disconnected) - ', err)
+  app.locals.DBisConnected = false;
+});
+/*==================================================*/
 
 /* API Homepage */
 app.get('/', (req: Request, res: Response) => {
     res.status(200).sendFile(path.join(__dirname + '/views/index.html'));
 });
+/*==================================================*/
 
 /* use for '/specs' route and router */
 app.use('/specs', specsRouter);
+/*==================================================*/
 
 /* Error Handlers */
-app.use(function(req: Request, res: Response) {
+app.use((req: Request, res: Response) => {
     res.status(404).send('404: Page not found');
 });
 
-app.use(function(error: Error, req: Request, res: Response, next: NextFunction) {
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     res.status(500).send('500: Internal error' + error);
 });
 /*==================================================*/
