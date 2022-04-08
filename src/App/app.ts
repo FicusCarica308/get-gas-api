@@ -8,7 +8,7 @@ const app: Application = express();
 
 /* API Homepage */
 app.get('/', (req: Request, res: Response) => {
-    res.status(200).sendFile(path.join(__dirname + '/homepage/index.html'));
+    res.status(200).sendFile(path.join(__dirname + '/views/index.html'));
 });
 
 app.use('/specs', specsRouter);
