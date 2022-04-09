@@ -3,7 +3,6 @@ import path from 'path';
 import mongoose, { Connection } from 'mongoose';
 import { connectDB } from '../DB-Engine/mongo_setup';
 
-
 /*Routers*/
 import { specsRouter } from './routes/specs';
 /*==================================================*/
@@ -17,21 +16,16 @@ const PORT = process.env.PORT || 5555;
 /* Mongoose setup */
 app.locals.DBisConnected = false;
 
-connectDB(app.locals.DBisConnected)
-  .then((res) => {
-    app.locals.DBisConnected = res;
-  })
+connectDB({ DBisConnected: app.locals.DBisConnected, wasVerification: false })
+  .then((result: Boolean) => {
+    app.locals.DBisConnected = result;
+  });
 
 const DB: Connection = mongoose.connection;
 
 DB.on('error', (err: Error) => {
   console.error('get-gas-api-cluster Database (Error Connecting) - ', err.message)
   app.locals.DBisConnected = false;
-});
-
-DB.on('connected', () => {
-  console.log('get-gas-api-cluster Database (Connected)')
-  app.locals.DBisConnected = true;
 });
 
 DB.on('reconnectFailed', (err: Error) => {
@@ -47,6 +41,7 @@ DB.on('disconnected', (err: Error) => {
 
 /* API Homepage */
 app.get('/', (req: Request, res: Response) => {
+    DB.close();
     res.status(200).sendFile(path.join(__dirname + '/views/index.html'));
 });
 /*==================================================*/
@@ -66,3 +61,5 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 /*==================================================*/
 
 app.listen(PORT, () => console.log(`get-gas-api is running on port ${PORT}`));
+
+export { app, DB };
