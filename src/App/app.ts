@@ -29,7 +29,7 @@ DB.on('error', (err: Error) => {
 });
 
 DB.on('reconnectFailed', (err: Error) => {
-  console.error('get-gas-api-cluster database (Cannot Reconnect) - ', err)
+  console.error('get-gas-api-cluster Database (Cannot Reconnect) - ', err)
   app.locals.DBisConnected = false;
 });
 
