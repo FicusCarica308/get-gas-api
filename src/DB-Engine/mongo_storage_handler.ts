@@ -1,4 +1,4 @@
-const Car = require('../DB-Engine/Schemas/car');
+import { Car } from '../DB-Engine/Schemas/car'
 
 type queryParams = {
   make: string,
