@@ -52,11 +52,15 @@ app.use('/specs', specsRouter);
 
 /* Error Handlers */
 app.use((req: Request, res: Response) => {
-    res.status(404).send('404: Page not found');
+    res.status(404).send('404: Page not found - Double check the Route/Params !');
 });
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    res.status(500).send('500: Internal error' + error);
+app.use((error: any, req: Request, res: Response, next: NextFunction) => { /* NEEDS HAS CUSTOM ERROR TYPE */
+  if (error.message == "Car Not Found in API query!") {
+    res.status(500).send(`<h1>500: Internal Server Error - ${error}</h1><h2>Please try again with different parameters</h2><h3>${error.location}</h3>`);
+  } else {
+    res.status(500).send(`<h1>500: Internal Server Error - Other</h1><h3>${error.location}</h3>`);
+  }
 });
 /*==================================================*/
 

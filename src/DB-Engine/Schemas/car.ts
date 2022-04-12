@@ -1,20 +1,19 @@
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema
 
-const schema: any = mongoose.Schema;
+/* NEEDS TYPING */
 
-const carsSchema = new schema ({
-
+const carsSchema = new Schema ({
     make: String,
     model: String,
     year: Number,
     displacment: Number,
-    cylinderCount: Number,
+    cylinders: Number,
     fuelSpecifications: {
         cityMPG: Number,
         highwayMPG: Number,
         combinedMPG: Number,
-        octaneRating: Number,
     }
 });
 
-export const Car = mongoose.model('Car', carsSchema, 'cars');
+module.exports = mongoose.model('Car', carsSchema, 'cars');

@@ -1,5 +1,7 @@
-import express, { Router, Request, Response } from 'express';
+import express, { Router, Request, Response, NextFunction } from 'express';
 import { connectDB } from '../../DB-Engine/mongo_setup';
+import { getCar } from '../../DB-Engine/mongo_storage_handler';
+import { getFullSpecs, getCityMpg } from '../../Request-Handlers/car-specs-request';
 
 /* All /specs routes */
 
@@ -12,30 +14,46 @@ Returns an object with reqeusted info
   year: [String - year of the vehicle],
 
   optional (returns either one or all):
-  cityMPG: [int],
+  city_mpg: [int],
   highwayMPG: [int],
   combinedMPG: [int],
-  octaneRating: [int],
 } 
 */
 
 const specsRouter: Router = express.Router();
 
 /* Returns always returned values + cityMPG */
-specsRouter.get('/city-mpg/:make/:model/:year/:cylinders?/:displacment?', (req: Request, res: Response) => {
+specsRouter.get('/city-mpg/:make/:model/:year/:cylinders?/:displacment?', (req: Request, res: Response, next: NextFunction) => {
   connectDB({ DBisConnected: req.app.locals.DBisConnected, wasVerification: true })
-    .then((result: Boolean) => {
-      req.app.locals.DBisConnected = result; /* Sets global DBisConnected to new connection status */
-      if (result == true) {
-        /* RUN DATABASE QUERY */
-        console.log('was true');
-        res.send('<h1>was true<\h1>');
-        /* IF DATABASE QUERY RETURNS NOTHING RUN REQUEST CALL */
-      } else {
-        /* RUN REQUEST CALL */
-        console.log('was false');
-        res.send('<h1>was false<\h1>');
+    .then((isConnected: Boolean) => {
+      req.app.locals.DBisConnected = isConnected; /* Sets global DBisConnected to new connection status */
+      const params = {
+        make: req.params.make,
+        model: req.params.model,
+        year: req.params.year,
+        cylinders: req.params.cylinders,
+        displacment: req.params.displacment,
       }
+      if (isConnected == true) {
+        console.log('Running database query with:', req.params);
+        getCar(params, 'is_cool')
+          .then((car) => {
+            console.log('Car found !', car)
+            res.json(car);
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+      getCityMpg(params)
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((error) => {
+        console.error(error, error.location);
+        res.status(500);
+        next(error)
+      })
     });
 });
 
@@ -51,9 +69,6 @@ specsRouter.get('/combined-mpg/:make/:model/:year/:cylinders?/:displacment?', (r
 });
 
 specsRouter.get('/all-mpg/:make/:model/:year/:cylinders?/:displacment?', (req: Request, res: Response) => {
-});
-
-specsRouter.get('/all-fuel-specs/:make/:model/:year/:cylinders?/:displacment?', (req: Request, res: Response) => {
 });
 
 specsRouter.get('/')

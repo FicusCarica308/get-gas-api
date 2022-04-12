@@ -31,4 +31,3 @@ async function connectDB(values: ConnectDB): Promise<Boolean> {
 }
 
 export { connectDB };
-
