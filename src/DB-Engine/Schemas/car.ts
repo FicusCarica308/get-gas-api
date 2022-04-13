@@ -12,7 +12,7 @@ const carsSchema = new Schema ({
     cylinders: Number,
     city_mpg: Number,
     highway_mpg: Number,
-    combined_mpg: Number,
+    combination_mpg: Number,
 });
 
 export const Car = mongoose.model('Car', carsSchema, 'cars');

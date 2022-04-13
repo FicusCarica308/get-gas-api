@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { specsAPIkey, specsAPIurl } from '../private-config';
 import { filterObject } from '../utils/object_utils';
+import { storeCar } from '../DB-Engine/mongo_storage_handler';
 
 type queryParams = {
   [key: string]: string | undefined,
@@ -39,6 +40,7 @@ async function getSpecs (params: queryParams, typeOfMpg: Array<string>): Promise
                 throw new Error("Car Not Found in API query!");
               }
               console.log('Getting car with params', params);
+              storeCar(data[0]);
               return (filterObject(data[0], [...typeOfMpg, ...alwaysSavedKeys]));
             })
         );

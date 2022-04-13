@@ -41,7 +41,6 @@ DB.on('disconnected', (err: Error) => {
 
 /* API Homepage */
 app.get('/', (req: Request, res: Response) => {
-    DB.close();
     res.status(200).sendFile(path.join(__dirname + '/views/index.html'));
 });
 /*==================================================*/

@@ -13,6 +13,9 @@ const alwaysSavedKeys: Array<string> = ['make', 'model', 'year'];
 
 function getCar (params: queryParams, typeOfMpg: Array<string>): Promise<object> | Promise<Error> {
   console.log('Running database query with:', params);
+  if (params.cylinders == null) {
+    delete params['cylinders'];
+  }
   return (
     Car.findOne(params)
       .then((car: any) => {
@@ -25,8 +28,24 @@ function getCar (params: queryParams, typeOfMpg: Array<string>): Promise<object>
     )
 }
 
-function storeCar(car: object): boolean {
-  return (true);
+function storeCar(car: any): void {
+  const newCar = new Car ({
+    make: car.make,
+    model: car.model,
+    year: Number(car.year),
+    cylinders: Number(car.cylinders),
+    city_mpg: Number(car.city_mpg),
+    highway_mpg: (car.highway_mpg),
+    combination_mpg: (car.combination_mpg),
+  });
+
+  newCar.save()
+    .then(() => {
+      console.log('new car with has been saved with :', car);
+    })
+    .catch((error: Error) => {
+      console.error('Error saving new car !', error);
+    })
 }
 
-export { getCar };
+export { getCar, storeCar };

@@ -2,7 +2,6 @@ import express, { Router, Request, Response, NextFunction } from 'express';
 import { connectDB } from '../../DB-Engine/mongo_setup';
 import { getCar } from '../../DB-Engine/mongo_storage_handler';
 import { getSpecs } from '../../Request-Handlers/car-specs-request';
-import { filterObject } from '../../utils/object_utils';
 
 const specsRouter: Router = express.Router();
 
