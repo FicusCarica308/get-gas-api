@@ -13,7 +13,7 @@ const alwaysSavedKeys: Array<string> = ['make', 'model', 'year'];
 
 function getCar (params: queryParams, typeOfMpg: Array<string>): Promise<object> | Promise<Error> {
   console.log('Running database query with:', params);
-  if (params.cylinders == null) {
+  if (params.cylinders == null || isNaN(Number(params.cylinders))) {
     delete params['cylinders'];
   }
   return (
@@ -41,7 +41,7 @@ function storeCar(car: any): void {
 
   newCar.save()
     .then(() => {
-      console.log('new car with has been saved with :', car);
+      console.log('new car has been saved with :', newCar);
     })
     .catch((error: Error) => {
       console.error('Error saving new car !', error);

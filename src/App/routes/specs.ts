@@ -13,6 +13,8 @@ type queryParams = {
   cylinders?: string | undefined,
 }
 
+type TypeOfMpg = "city_mpg" | "highway_mpg" | "combination_mpg" | "all_mpg"
+
 function buildParams(req: Request): queryParams {
   return {
     make: req.params.make,
@@ -23,17 +25,27 @@ function buildParams(req: Request): queryParams {
 }
 
 /* Returns always returned values + cityMPG */
-specsRouter.get('/city-mpg/:make/:model/:year/:cylinders?', (req: Request, res: Response, next: NextFunction) => {
+specsRouter.get('/:type/:make/:model/:year/:cylinders?', (req: Request, res: Response, next: NextFunction) => {
+  const type: TypeOfMpg = req.params.type as TypeOfMpg;
+  let typeOfMpg: Array<string>;
+  delete req.params.type;
+
+  if (type == "all_mpg") {
+    typeOfMpg = ['city_mpg', 'highway_mpg', 'combination_mpg'];
+  } else {
+    typeOfMpg = [type];
+  }
+
   connectDB({ DBisConnected: req.app.locals.DBisConnected, wasVerification: true })
     .then(async (isConnected: Boolean) => {
       const params = buildParams(req);
       req.app.locals.DBisConnected = isConnected; /* Sets global DBisConnected to new connection status */
       let carWasFound: boolean | Error | object = false;
       if (isConnected == true) {
-        carWasFound = await getCar(params, ['city_mpg']).catch(error => { console.error(error); return(false); })
+        carWasFound = await getCar(params, typeOfMpg).catch(error => { console.error(error); return(false); })
       }
       if (!carWasFound || isConnected == false) {
-        getSpecs(params, ['city_mpg'])
+        getSpecs(params, typeOfMpg)
         .then(data => { if (!res.headersSent) res.json(data) })
         .catch((error) => {
           console.error(error, error.location);
@@ -44,24 +56,6 @@ specsRouter.get('/city-mpg/:make/:model/:year/:cylinders?', (req: Request, res: 
         res.send(carWasFound);
       }
     });
-});
-
-/* Returns always returned values + highwayMPG */
-specsRouter.get('/highway-mpg/:make/:model/:year/:junk/:cylinders?', (req: Request, res: Response, next: NextFunction) => {
-  try {
-  req.params.year = JSON.parse(req.params.year);
-  } catch (error) {
-    console.log(req.params);
-    console.log(error)
-    next(error)
-  }
-});
-
-/* Returns always returned values + combinedMPG */
-specsRouter.get('/combined-mpg/:make/:model/:year/:cylinders?', (req: Request, res: Response) => {
-});
-
-specsRouter.get('/all-mpg/:make/:model/:year/:cylinders?', (req: Request, res: Response) => {
 });
 
 specsRouter.get('/')
