@@ -47,7 +47,14 @@ specsRouter.get('/city-mpg/:make/:model/:year/:cylinders?', (req: Request, res: 
 });
 
 /* Returns always returned values + highwayMPG */
-specsRouter.get('/highway-mpg/:make/:model/:year/:cylinders?', (req: Request, res: Response) => {
+specsRouter.get('/highway-mpg/:make/:model/:year/:junk/:cylinders?', (req: Request, res: Response, next: NextFunction) => {
+  try {
+  req.params.year = JSON.parse(req.params.year);
+  } catch (error) {
+    console.log(req.params);
+    console.log(error)
+    next(error)
+  }
 });
 
 /* Returns always returned values + combinedMPG */
