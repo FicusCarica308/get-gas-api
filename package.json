@@ -4,11 +4,14 @@
   "description": "A effecient API service that returns data associated with cheapest gas in a users area. In addition to vehicle specification data.",
   "main": "app.js",
   "scripts": {
-    "start": "node dist/App/app.js",
+    "compile-ts": "tsc -p ./config/tsconfig.build.json",
+    "clean-dist": "rimraf dist/",
+    "copy-html": "copyfiles -u 2 src/App/views/** dist/App/",
+    "build": "npm run clean-dist && npm run compile-ts && npm run copy-html",
+    "start": "npm run build && node dist/App/app.js",
     "start-dev": "nodemon src/App/app.ts",
-    "build": "tsc -p ./config/tsconfig.build.json",
     "typescript": "tsc",
-    "lint": "eslint -c ./config/.eslintrc.json ./src/**/*",
+    "lint": "eslint -c ./config/.eslintrc.json ./src/**/*.ts",
     "test": "jest ./src"
   },
   "repository": {
@@ -23,14 +26,19 @@
   "homepage": "https://github.com/FicusCarica308/get-gas-api#readme",
   "dependencies": {
     "express": "^4.17.3",
-    "node-fetch": "^3.2.3"
+    "mongoose": "^6.2.10",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^17.0.23",
+    "@types/node-fetch": "^2.6.1",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.4",
@@ -38,6 +46,8 @@
     "eslint-plugin-promise": "^5.2.0",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
