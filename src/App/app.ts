@@ -57,7 +57,7 @@ app.use((req: Request, res: Response) => {
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => { /* NEEDS HAS CUSTOM ERROR TYPE */
   if (error.message == "Car Not Found in API query!") {
-    res.status(500).send(`<h1>500: Internal Server Error - ${error}</h1><h2>Please try again with different parameters</h2><h3>${error.location}</h3>`);
+    res.status(500).send(`<h1>500: Internal Server Error - ${error}</h1><h2>Please try again with different parameters or add (/:cylinders?/:displacment?)</h2>`);
   } else {
     res.status(500).send(`<h1>500: Internal Server Error - Other</h1><h3>${error.location}</h3>`);
   }

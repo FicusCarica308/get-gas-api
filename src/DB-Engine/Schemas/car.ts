@@ -9,13 +9,10 @@ const carsSchema = new Schema ({
     make: String,
     model: String,
     year: Number,
-    displacment: Number,
     cylinders: Number,
-    fuelSpecifications: {
-        cityMPG: Number,
-        highwayMPG: Number,
-        combinedMPG: Number,
-    }
+    city_mpg: Number,
+    highway_mpg: Number,
+    combined_mpg: Number,
 });
 
 export const Car = mongoose.model('Car', carsSchema, 'cars');
