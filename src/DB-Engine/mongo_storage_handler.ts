@@ -11,17 +11,22 @@ type queryParams = {
 
 const alwaysSavedKeys: Array<string> = ['make', 'model', 'year'];
 
-function getCar (params: queryParams, typeOfMpg: Array<string>): Promise<any> {
+function getCar (params: queryParams, typeOfMpg: Array<string>): Promise<object> | Promise<Error> {
   console.log('Running database query with:', params);
   return (
     Car.findOne(params)
       .then((car: any) => {
         if (car != null) {
+          console.log('Car was found ! - ', car);
           return (filterObject(car['_doc'], [...typeOfMpg, ...alwaysSavedKeys]));
         }
         throw new Error('No Car Found in database');
       })
     )
+}
+
+function storeCar(car: object): boolean {
+  return (true);
 }
 
 export { getCar };

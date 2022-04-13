@@ -26,8 +26,8 @@ function isCorrectCar(params: queryParams, data: Data) {
   return (true);
 }
 
-function getSpecs (params: queryParams, typeOfMpg: Array<string>): Promise<any> { /* FIX RETURN TYPING */
-  const apiQuery = `make=${params.make}&year=${params.year}&model=${params.model}&cylinders=${params.cylinders}&displacment=${params.displacment}`;
+async function getSpecs (params: queryParams, typeOfMpg: Array<string>): Promise<any> { /* FIX RETURN TYPING */
+  const apiQuery: string = `make=${params.make}&year=${params.year}&model=${params.model}&cylinders=${params.cylinders}&displacment=${params.displacment}`;
   return (
     fetch(`${specsAPIurl}${apiQuery}`, { headers: { 'X-Api-Key': specsAPIkey } })
       .then((res: any) => { /* NEEDS TYPING */

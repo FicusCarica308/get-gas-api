@@ -26,24 +26,24 @@ function buildParams(req: Request): queryParams {
 /* Returns always returned values + cityMPG */
 specsRouter.get('/city-mpg/:make/:model/:year/:cylinders?', (req: Request, res: Response, next: NextFunction) => {
   connectDB({ DBisConnected: req.app.locals.DBisConnected, wasVerification: true })
-    .then((isConnected: Boolean) => {
+    .then(async (isConnected: Boolean) => {
       const params = buildParams(req);
       req.app.locals.DBisConnected = isConnected; /* Sets global DBisConnected to new connection status */
+      let carWasFound: boolean | Error | object = false;
       if (isConnected == true) {
-        getCar(params, ['city_mpg'])
-          .then((car) => {
-            console.log('Car found !', car);
-            res.json(car);
-          })
-          .catch(error => console.error(error) )
+        carWasFound = await getCar(params, ['city_mpg']).catch(error => { console.error(error); return(false); })
       }
-      getSpecs(params, ['city_mpg'])
-      .then(data => { if (!res.headersSent) res.json(data) })
-      .catch((error) => {
-        console.error(error, error.location);
-        res.status(500);
-        next(error)
-      })
+      if (!carWasFound || isConnected == false) {
+        getSpecs(params, ['city_mpg'])
+        .then(data => { if (!res.headersSent) res.json(data) })
+        .catch((error) => {
+          console.error(error, error.location);
+          res.status(500);
+          next(error)
+        })
+      } else {
+        res.send(carWasFound);
+      }
     });
 });
 
