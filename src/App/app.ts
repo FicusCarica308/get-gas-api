@@ -5,6 +5,7 @@ import { connectDB } from '../DB-Engine/mongo_setup';
 
 /*Routers*/
 import { specsRouter } from './routes/specs';
+import { stationsRouter } from './routes/stations';
 /*==================================================*/
 
 /* App setup */
@@ -49,11 +50,16 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/specs', specsRouter);
 /*==================================================*/
 
+/* use for '/stations' route and router */
+app.use('/stations', stationsRouter);
+/*==================================================*/
+
 /* Error Handlers */
 app.use((req: Request, res: Response) => {
     res.status(404).send('404: Page not found - Double check the Route/Params !');
 });
 
+/* Will load if a 500 is sent in any route in the application */
 app.use((error: any, req: Request, res: Response, next: NextFunction) => { /* NEEDS HAS CUSTOM ERROR TYPE */
   if (error.message == "Car Not Found in API query!") {
     res.status(500).send(`<h1>500: Internal Server Error - ${error}</h1><h2>Please try again with different parameters or add (/:cylinders?/:displacment?)</h2>`);

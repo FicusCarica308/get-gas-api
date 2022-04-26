@@ -5,6 +5,7 @@ import { getSpecs } from '../../Request-Handlers/car-specs-request';
 
 const specsRouter: Router = express.Router();
 
+/* This type restricts what keys/valuues should be passed from the Request object */
 type queryParams = {
   [key: string]: string | undefined,
   make: string,
@@ -13,8 +14,18 @@ type queryParams = {
   cylinders?: string | undefined,
 }
 
+/* This type restricts what can be passed to the :type parameter in the /specs route */
 type TypeOfMpg = "city_mpg" | "highway_mpg" | "combination_mpg" | "all_mpg"
 
+/*
+* Description: This function creates a javascript objects based on
+*   the parameters passed to the /specs route (accessed via req.params).
+* 
+* Params:
+* @req [Request Object] - The Request object passed from the router.
+*
+* Return: Returns a new object matching the queryParams typescipt type.
+*/
 function buildParams(req: Request): queryParams {
   return {
     make: req.params.make,
@@ -24,7 +35,9 @@ function buildParams(req: Request): queryParams {
   }
 }
 
-/* Returns always returned values + cityMPG */
+/* This route will return a object containing the make, model, year and
+* cylinders of a given vehicle + the requested type of MPG (refer to TypeOfMpg type)
+*/
 specsRouter.get('/:type/:make/:model/:year/:cylinders?', (req: Request, res: Response, next: NextFunction) => {
   const type: TypeOfMpg = req.params.type as TypeOfMpg;
   let typeOfMpg: Array<string>;
@@ -36,6 +49,7 @@ specsRouter.get('/:type/:make/:model/:year/:cylinders?', (req: Request, res: Res
     typeOfMpg = [type];
   }
 
+  /* First I call my custom function connectDB which ensures the database is connected before proceeding */
   connectDB({ DBisConnected: req.app.locals.DBisConnected, wasVerification: true })
     .then(async (isConnected: Boolean) => {
       const params = buildParams(req);
