@@ -1,2 +1,2 @@
 # get-gas-api
-A effecient API service that returns data associated with cheapest gas in a users area. In addition to vehicle specification data.
+A non-production practice API service that returns data associated with gas stations in a users area + vehicle specifications. 
