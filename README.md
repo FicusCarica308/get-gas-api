@@ -42,6 +42,14 @@ For this project I wanted to create an application that could consistently stay 
 * Trying out mongoDB Atlas as a database
 * Practice normalizing data from external API's and storing normalized data
 
+#### Other:
+The project requires process.env vairables 
+* DEV_KEY
+* GOOGLE_MAPS_API_KEY
+* MONGO_URI
+* SPECS_API_KEY
+* SPECS_API_URL
+
 ## Authors
 Manuel Enrique Figueroa - [Github](https://github.com/FicusCarica308), [LinkedIn](https://www.linkedin.com/in/manuel-figueroa-292216215)
 
