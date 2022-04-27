@@ -29,7 +29,7 @@ function isCorrectCar(params: queryParams, data: Data) {
 async function getSpecs (params: queryParams, typeOfMpg: Array<string>): Promise<any> { /* FIX RETURN TYPING */
   const apiQuery: string = `make=${params.make}&year=${params.year}&model=${params.model}&cylinders=${params.cylinders}`;
   return (
-    fetch(`${process.env.SPECS_API_URL}${apiQuery}`, { headers: { 'X-Api-Key': process.env.SPECS_API_KEY } })
+    fetch(`${process.env.SPECS_API_URL}${apiQuery}`, { headers: { 'X-Api-Key': process.env.SPECS_API_KEY as string } })
       .then((res: any) => { /* NEEDS TYPING */
         return (
           res.json()
