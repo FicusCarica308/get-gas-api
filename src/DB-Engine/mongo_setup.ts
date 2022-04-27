@@ -14,7 +14,7 @@ async function connectDB(values: ConnectDB): Promise<Boolean> {
   if (values.DBisConnected == false)
   {
     try {
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI as string);
         if (values.wasVerification == true) {
           console.log('get-gas-api-cluster required Reconnect (Reconnected)')
         } else {
