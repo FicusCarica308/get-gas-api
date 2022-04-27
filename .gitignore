@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+#other
+private-config.ts
+
+>>>>>>> 4fe002fedbba64f7eac18ad85334fab77eea0a7f
 # Logs
 logs
 *.log
