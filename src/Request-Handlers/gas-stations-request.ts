@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import { googleMapsAPIkey } from '../private-config';
 
 type stationQueryParams = {
     [key: string]: string | undefined,
@@ -13,7 +12,7 @@ type Data = {
 }
 
 async function getStations (params: stationQueryParams): Promise<any> { /* FIX RETURN TYPING */
-  const apiQuery: string = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${params.latitude}%2C${params.longitude}&rankby=distance&type=gas_station&key=${googleMapsAPIkey}`;
+  const apiQuery: string = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${params.latitude}%2C${params.longitude}&rankby=distance&type=gas_station&key=${process.env.GOOGLE_MAPS_API_KEY}`;
   return (
     fetch(apiQuery)
       .then((res: any) => { /* NEEDS TYPING */

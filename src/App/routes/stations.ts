@@ -1,6 +1,5 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
 import { getStations } from '../../Request-Handlers/gas-stations-request';
-import { develperAccessAPIkey } from '../../private-config';
 
 const stationsRouter: Router = express.Router();
 
@@ -19,7 +18,7 @@ function buildStationParams(req: Request): stationQueryParams {
 }
 
 stationsRouter.get('/:devKey/:latitude/:longitude/', (req: Request, res: Response, next: NextFunction) => {
-    if (req.params.devKey !== develperAccessAPIkey) {
+    if (req.params.devKey !== process.env.DEV_KEY) {
         res.status(500);
         next(new Error('API IS INCORRECT - ACCESS DENIED'));
     } else {

@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import { specsAPIkey, specsAPIurl } from '../private-config';
 import { filterObject } from '../utils/object_utils';
 import { storeCar } from '../DB-Engine/mongo_storage_handler';
 
@@ -28,9 +27,9 @@ function isCorrectCar(params: queryParams, data: Data) {
 }
 
 async function getSpecs (params: queryParams, typeOfMpg: Array<string>): Promise<any> { /* FIX RETURN TYPING */
-  const apiQuery: string = `make=${params.make}&year=${params.year}&model=${params.model}&cylinders=${params.cylinders}&displacment=${params.displacment}`;
+  const apiQuery: string = `make=${params.make}&year=${params.year}&model=${params.model}&cylinders=${params.cylinders}`;
   return (
-    fetch(`${specsAPIurl}${apiQuery}`, { headers: { 'X-Api-Key': specsAPIkey } })
+    fetch(`${process.env.SPECS_API_URL}${apiQuery}`, { headers: { 'X-Api-Key': process.env.SPECS_API_KEY } })
       .then((res: any) => { /* NEEDS TYPING */
         return (
           res.json()

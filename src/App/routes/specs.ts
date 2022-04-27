@@ -2,7 +2,6 @@ import express, { Router, Request, Response, NextFunction } from 'express';
 import { connectDB } from '../../DB-Engine/mongo_setup';
 import { getCar } from '../../DB-Engine/mongo_storage_handler';
 import { getSpecs } from '../../Request-Handlers/car-specs-request';
-import { develperAccessAPIkey } from '../../private-config';
 
 const specsRouter: Router = express.Router();
 
@@ -44,7 +43,7 @@ specsRouter.get('/:devKey/:type/:make/:model/:year/:cylinders?', (req: Request, 
   let typeOfMpg: Array<string>;
   delete req.params.type;
 
-  if (req.params.devKey !== develperAccessAPIkey) {
+  if (req.params.devKey !== process.env.DEV_KEY) {
     res.status(500);
     next(new Error('API IS INCORRECT - ACCESS DENIED'));
   } else {
