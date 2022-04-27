@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A effecient API service that returns data associated with cheapest gas in a users area. In addition to vehicle specification data.",
   "main": "app.js",
+  "engines": {
+    "node": "12.22.7"
+  },
   "scripts": {
     "compile-ts": "tsc -p ./config/tsconfig.build.json",
     "clean-dist": "rimraf dist/",
