@@ -10,7 +10,7 @@ For this project I wanted to create an application that could consistently stay 
 
 ## Routes:
 * /specs/:devKey/:type/:make/:model/:year/:cylinders?/ - Returns MPG data for a vehicle using an external API.
-* /stations/:devKey/:latitude/:longitude/ - Returns the GPS Coordinates of gas stations ranked closest to farthest using the given longitude and latitude.
+* /stations/:devKey/:latitude/:longitude/ - Returns the GPS Coordinates of gas stations ranked closest to farthest using the given longitude and latitude. (uses google maps places API and includes the gas stations place_id)
 
 ### /specs parameters description
 * :devKey (required) - This is a development API key that makes the API only accessable to desired users
