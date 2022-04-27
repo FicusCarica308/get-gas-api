@@ -1,0 +1,10 @@
+{
+    /* Excludes and jest .test.ts files from final build */
+    "extends": "./tsconfig.json",
+    "include": [
+      "../src/**/*"
+    ],
+    "exclude": [
+      "../src/**/*.test.ts"
+    ]
+}
