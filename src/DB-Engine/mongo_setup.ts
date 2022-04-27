@@ -1,4 +1,3 @@
-import { mongoURI } from '../private-config';
 import mongoose, { Connection } from 'mongoose';
 
 type ConnectDB = {
