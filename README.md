@@ -9,21 +9,21 @@ get-gas-api is a non-production practice/portfolio API service that returns data
 For this project I wanted to create an application that could consistently stay connected to a database during usage. The API will call an external API on database failure or if a item is not found in a DB query. The API will also normalize the external data then store it in the database to be used later. This prevents unecessary external API calls or re-normalizing of repeated calls.
 
 ## Routes:
-* /specs/:type/:make/:model/:year/:cylinders?/:devKey? - Returns MPG data for a vehicle using an external API.
-* /stations/:latitude/:longitude/:devKey? - Returns the GPS Coordinates of gas stations ranked closest to farthest using the given longitude and latitude.
+* /specs/:devKey/:type/:make/:model/:year/:cylinders?/ - Returns MPG data for a vehicle using an external API.
+* /stations/:devKey/:latitude/:longitude/ - Returns the GPS Coordinates of gas stations ranked closest to farthest using the given longitude and latitude.
 
 ### /specs parameters description
+* :devKey (required) - This is a development API key that makes the API only accessable to desired users
 * :type (required) - The type of MPG the user wants to return (possible vals include 'all_mpg', 'city_mpg', 'highway_mpg', or 'combination_mpg').
 * :make (required) - This is the vehicle manufacturer of the users vehicle (e.g. Honda, Toyota, Ford, etc...).
 * :model (required) - The model of the users vehicle (e.g. Camry, F-150, Accord, etc...).
 * :year - (required) - The year of production of the users vehicle.
 * :cylinders? (optional) - An optional parameter that can narrow down the search results to more accurate MPG ratings. The number of cylinders of a vehicles engine.
-* devKey? (required) - This is a development API key that makes the API only accessable to desired users
 
 ### /stations parameters description
+* :devKey (required) - This is a development API key that makes the API only accessable to desired users
 * :latitude (required) - The latitude of the users current position.
 * :longitude (required) - the longitude of the users current position.
-* * devKey? (required) - This is a development API key that makes the API only accessable to desired users
 
 
 ### Technologies:
