@@ -1,4 +1,3 @@
-![sous_logo](https://raw.githubusercontent.com/FicusCarica308/sous_v1/master/application/page_content/images/sous_logo.png)
 # get-gas-api: UNDEPLOYED / INACTIVE
 get-gas-api is a non-production practice/portfolio API service that returns data associated with gas stations in a users area + vehicle specifications. 
 * Express.js
