@@ -41,6 +41,7 @@ For this project I wanted to create an application that could consistently stay 
 * Practice configuring Jest / Typescript / eslint in a new project fro scratch
 * Trying out mongoDB Atlas as a database
 * Practice normalizing data from external API's and storing normalized data
+* Configure CORS in a express application
 
 #### Other:
 The project requires process.env vairables 
