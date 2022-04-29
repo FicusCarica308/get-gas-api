@@ -2,6 +2,7 @@ import express, {Application, NextFunction, Request, Response} from 'express';
 import path from 'path';
 import mongoose, { Connection } from 'mongoose';
 import { connectDB } from '../DB-Engine/mongo_setup';
+import cors from "cors";
 
 /*Routers*/
 import { specsRouter } from './routes/specs';
@@ -11,6 +12,7 @@ import { stationsRouter } from './routes/stations';
 /* App setup */
 const app: Application = express();
 const PORT = process.env.PORT || 5555;
+app.use(cors());
 /*==================================================*/
 
 
