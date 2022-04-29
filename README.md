@@ -44,11 +44,12 @@ For this project I wanted to create an application that could consistently stay 
 
 #### Other:
 The project requires process.env vairables 
-* DEV_KEY
-* GOOGLE_MAPS_API_KEY
-* MONGO_URI
-* SPECS_API_KEY
+* DEV_KEY - dev key required to access data
+* GOOGLE_MAPS_API_KEY - A google maps API key for /stations route
+* MONGO_URI - to enable database storage
+* SPECS_API_KEY - Key to car specification API
 * SPECS_API_URL
+* ORIGIN - The external origin that cors allows access to
 
 ## Authors
 Manuel Enrique Figueroa - [Github](https://github.com/FicusCarica308), [LinkedIn](https://www.linkedin.com/in/manuel-figueroa-292216215)
