@@ -52,6 +52,9 @@ The project requires process.env vairables
 * SPECS_API_URL
 * ORIGIN - The external origin that cors allows access to
 
+#### TO DO LIST:
+* create a app configuration file that exports all process.env variables into the app so I have a central point of access for all of them in development
+
 ## Authors
 Manuel Enrique Figueroa - [Github](https://github.com/FicusCarica308), [LinkedIn](https://www.linkedin.com/in/manuel-figueroa-292216215)
 
