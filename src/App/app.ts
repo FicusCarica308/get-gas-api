@@ -12,7 +12,9 @@ import { stationsRouter } from './routes/stations';
 /* App setup */
 const app: Application = express();
 const PORT = process.env.PORT || 5555;
-app.use(cors());
+app.use(cors({
+  origin: process.env.ORIGIN
+}));
 /*==================================================*/
 
 
