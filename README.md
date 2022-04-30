@@ -1,4 +1,4 @@
-# get-gas-api: DEPLOYED (https://get-gas-api.herokuapp.com/)
+# get-gas-api: DEPLOYED
 get-gas-api is a non-production practice/portfolio API service that returns data associated with gas stations in a users area + vehicle specifications. 
 * Express.js
 * mongoDB
